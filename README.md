@@ -49,6 +49,32 @@ Create `.mcp.json` in your project directory:
 
 Restart Claude Code and approve the MCP server when prompted.
 
+### Using Nix
+
+#### Claude Code
+
+```bash
+claude mcp add finwise -- nix run github:rameezk/finwise-mcp
+```
+
+#### Manual Configuration
+
+Add to your MCP config:
+
+```json
+{
+  "mcpServers": {
+    "finwise": {
+      "command": "nix",
+      "args": ["run", "github:rameezk/finwise-mcp"],
+      "env": {
+        "FINWISE_API_KEY": "your-api-key"
+      }
+    }
+  }
+}
+```
+
 ### Getting your API Key
 
 Get your Finwise API key from Settings > API Keys in the [Finwise Dashboard](https://finwiseapp.io).
