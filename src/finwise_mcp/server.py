@@ -31,7 +31,9 @@ def get_client() -> FinWise:
 def list_accounts() -> list[dict[str, Any]]:
     """List all financial accounts with names, types, currencies, and balances.
 
-    Returns account ID, name, type, currency, and current balance for each account.
+    Returns account ID, name, type, currency, current balance, and available balance
+    for each account. For credit cards and access bonds the available balance is the
+    amount that can still be drawn, which differs from the current balance owed.
     """
     client = get_client()
     response = client.accounts.list()
@@ -44,6 +46,9 @@ def list_accounts() -> list[dict[str, Any]]:
             "sub_type": account.sub_type,
             "currency": account.current_balance.currency_code if account.current_balance else None,
             "balance": float(account.current_balance.amount) if account.current_balance else None,
+            "available_balance": (
+                float(account.available_balance.amount) if account.available_balance else None
+            ),
             "emoji": account.emoji,
             "is_archived": account.is_archived,
         }
